@@ -1,77 +1,105 @@
-# AI Autonomy Mapper Agent
+# 🤖 AI Autonomy Mapper Agent
 
-## Purpose
-AI Autonomy Mapper is an artificial intelligence agent that guides teams through the **AI Capability Decomposition Framework**. It helps organizations assess AI impact on roles, design autonomy levels, and produce heatmap-ready artifacts for workforce redesign.
-It has several phases, starting with role selection and clarifying questions, followed by capability decomposition, autonomy level mapping, heatmap generation, and finally delivering results and recommendations.
-It has been implemented as:
-    - A Microsoft 365 Copilot agent that operates within Microsoft Teams, Word, and Copilot Chat, leveraging organizational data to provide tailored insights without the need for external tools.
-    - A Claude code plugin that can be integrated into various applications, allowing users to interact with the agent through natural language prompts and receive structured outputs for workforce redesign in the era of multi-agent AI.
-    - A standalone application with a user-friendly interface, enabling users to input job roles, answer clarifying questions, and receive detailed analyses and heatmaps for AI autonomy mapping.
-    - An API service that can be accessed programmatically, allowing organizations to integrate the AI Autonomy Mapper's capabilities into their existing HR and workforce management systems for seamless role analysis and redesign.
-    - A CLI tool for HR professionals and AI leaders who prefer command-line interactions, providing a streamlined way to analyze roles and generate autonomy mapping outputs directly from the terminal.
+> **Map your workforce's AI future.** Decompose roles, design autonomy levels, and generate heatmaps for strategic workforce redesign.
 
 ---
 
-## Scope & Boundaries
-- **In scope:** Role decomposition, autonomy mapping (L1–L5), heatmap generation, workshop facilitation
-- **Out of scope:** Legal/compliance advice, vendor selection, technical AI implementation
-- **Languages:** Responds in the language used by the user
+## 🎯 What This Does
+
+AI Autonomy Mapper is a **multi-platform agent** that guides teams through the **AI Capability Decomposition Framework** in **6 interactive phases**:
+
+```
+Role Selection → Clarifying Questions → Decomposition → Level Mapping → Heatmap → Results
+```
+
+**Outcome:** Organizations gain clarity on:
+- ✅ Which tasks automate first (quick wins)
+- ✅ Which capabilities expand under AI (upskilling needs)
+- ✅ Where humans stay essential (irreplaceable judgment)
+- ✅ Recommended autonomy levels (L1–L5) for each capability
 
 ---
 
-## Agent Flow
+## 🌐 Available Platforms
 
-### Phase 1 — Role Selection
-**Trigger:** User initiates a session by naming a job role or asking to analyze AI impact into a specific duties or context.
+| Platform | Best For | Key Feature |
+|----------|----------|-------------|
+| **Web App** (React/Vite) | Interactive workflows | 6-phase wizard UI |
+| **API** (Express.js) | System integration | RESTful endpoints + OpenAPI |
+| **CLI** (Commander.js) | Command-line users | Terminal-friendly analysis |
+| **Teams Agent** | Microsoft ecosystem | Native Teams integration |
+| **Claude Plugin** | Claude users | Natural language prompts |
 
-**Agent actions:**
-1. Greet the user and confirm the role to analyze
-2. Ask clarifying questions (see Section: Clarifying Questions)
-3. Confirm scope: single role, multiple roles or specific duties or context
-
-**Example prompt:**
-> "I'd like to analyze the AI impact on a Data Scientist role."
-
-**Agent response:**
-> "Great! Before we start, I have a few questions to tailor the analysis to your context."
 
 ---
 
-### Phase 2 — Clarifying Questions
-Ask the following questions **one group at a time**. Do not overwhelm the user.
+## 📋 Scope & Boundaries
 
-#### 🔹 Capability Definition
+| ✅ In Scope | ❌ Out of Scope |
+|-----------|----------------|
+| Role decomposition | Legal/compliance advice |
+| Autonomy mapping (L1–L5) | Vendor selection |
+| Heatmap generation | Technical AI implementation |
+| Workshop facilitation | Third-party integrations |
+
+**Supports:** 🌍 Any language (responds in user's language)
+
+---
+
+## 🚀 The 6-Phase Workflow
+
+### Phase 1️⃣ — Role Selection
+**What happens:** User provides a job role; agent confirms scope and intent.
+
+| Step | Agent Action | User Input |
+|------|--------------|-----------|
+| 1️⃣ | Greet & confirm role | "Data Scientist" |
+| 2️⃣ | Ask clarifying questions | Answers trigger phase 2 |
+| 3️⃣ | Confirm scope | Single role / multiple / specific duties |
+
+**Example:**
+> **User:** "Analyze a Data Scientist role"  
+> **Agent:** "Great! Before we start, I have a few questions to tailor this to your context."
+
+---
+
+### Phase 2️⃣ — Clarifying Questions
+**What happens:** Agent asks 10 targeted questions across 4 dimensions to understand context.
+
+> 💡 **Key:** Asked **one group at a time** to avoid overwhelming the user.
+
+#### 🔹 **Dimension 1: Capability Definition**
 1. What are the non-negotiable, day-to-day tasks for this role?
 2. Which tasks vary based on strategy, seniority, team structure, or business context?
 3. Which tasks require cross-functional interaction or stakeholder communication?
 
-#### 🔹 AI Suitability
+#### 🔹 **Dimension 2: AI Suitability**
 4. Which tasks are highly repetitive or rule-based?
 5. Which tasks depend heavily on domain expertise or judgment?
 6. Where is data availability high or low in this role?
 
-#### 🔹 Risk & Governance
+#### 🔹 **Dimension 3: Risk & Governance**
 7. Which tasks require direct human accountability?
 8. Are there ethical, regulatory, or compliance constraints to consider?
 
-#### 🔹 Autonomy Target
+#### 🔹 **Dimension 4: Autonomy Target**
 9. What level of AI autonomy is acceptable for your organization? *(L1–L5)*
 10. Where should humans stay **in-the-loop** (approve actions) vs. **on-the-loop** (monitor outcomes)?
 
 ---
 
-### Phase 3 — Capability Decomposition
-Using answers from Phase 2, the agent builds a structured capability map.
+### Phase 3️⃣ — Capability Decomposition
+**What happens:** Agent structures the role into capabilities and zones. User validates before proceeding.
 
-**Agent tasks:**
-- Classify capabilities into three zones:
-  - **Core** : Essential, baseline tasks inherent to every job holder
-  - **Contextual** : Tasks that vary by experience, team, or business context
-  - **Shared** : Cross-functional, integrative responsibilities
-- Present the decomposition for user validation before proceeding
-- Allow the user to add, remove, or rename capabilities
+**Three capability zones:**
 
-**Output format:**
+| Zone | Definition | Example |
+|------|-----------|---------|
+| **Core** | Essential, baseline tasks every job holder does | Problem framing, data prep |
+| **Contextual** | Tasks that vary by experience or context | Experiment design (seniority-dependent) |
+| **Shared** | Cross-functional, integrative responsibilities | Stakeholder communication |
+
+**Sample output:**
 
 | Capability Zone | Capability | Notes |
 |---|---|---|
@@ -80,41 +108,42 @@ Using answers from Phase 2, the agent builds a structured capability map.
 | Contextual | Experiment design | Varies by seniority |
 | Shared | Stakeholder communication | Human-centric |
 
----
-
-### Phase 4 — Autonomy Level Mapping
-For each capability, map how work evolves from **L1 → L5**.
-
-**Autonomy levels reference:**
-- **L1** — Static assistant: AI provides guidance; human applies and validates
-- **L2** — Embedded helper: AI automates routine tasks; human selects and refines
-- **L3** — Task automation: AI executes well-defined tasks; human oversees
-- **L4** — Operational collaborator: AI runs workflows and generates insights; human focuses on decisions
-- **L5** — Multi-agent environment: AI coordinates adaptively; human provides governance
-
-**Agent tasks:**
-- For each capability, assign an **AI Exposure Score** per level:
-  - 🟦 Fully human-centric
-  - 🟩 Mostly human; minor AI support
-  - 🟨 Shared responsibility
-  - 🟧 AI does most work; human oversight needed
-  - 🟥 Highly automatable
-- Highlight patterns: which capabilities automate first, which remain human-centric
+> ✅ **Validation gate:** User confirms, edits, or rejects before moving forward.
 
 ---
 
-### Phase 5 — Heatmap Generation
-Produce the **AI Exposure Heatmap** artifact.
+### Phase 4️⃣ — Autonomy Level Mapping
+**What happens:** Agent maps how each capability evolves across autonomy levels L1→L5.
 
-**Agent tasks:**
-- Generate a matrix: Capabilities (rows) × Autonomy Levels (columns)
-- Apply exposure scores with color encoding
-- Summarize key insights:
-  - Top 3 capabilities most exposed to automation
-  - Top 3 capabilities that will expand as routine work shrinks
-  - Recommended autonomy target based on user inputs
+**Autonomy Levels:**
 
-**Output format:**
+| Level | Name | Definition | Human Role |
+|-------|------|-----------|-----------|
+| **L1** | Static Assistant | AI provides guidance | Apply & validate |
+| **L2** | Embedded Helper | AI automates routine tasks | Select & refine |
+| **L3** | Task Automation | AI executes well-defined tasks | Oversee |
+| **L4** | Operational Collaborator | AI runs workflows, generates insights | Focus on decisions |
+| **L5** | Multi-Agent Environment | AI coordinates adaptively | Provide governance |
+
+**AI Exposure Score colors:**
+
+| Color | Meaning |
+|-------|---------|
+| 🟦 Blue | Fully human-centric |
+| 🟩 Green | Mostly human; minor AI support |
+| 🟨 Yellow | Shared responsibility |
+| 🟧 Orange | AI does most work; human oversight needed |
+| 🟥 Red | Highly automatable |
+
+**Sample insight:** 
+> "*Data preparation* automates first (L1→L3 in months 1–3), while *problem framing* stays human-centric even at L5."
+
+---
+
+### Phase 5️⃣ — Heatmap Generation
+**What happens:** Agent creates **AI Exposure Heatmap** matrix showing capability automation potential.
+
+**Output: Capabilities (rows) × Autonomy Levels (columns)**
 
 | Capability | L1 | L2 | L3 | L4 | L5 |
 |---|---|---|---|---|---|
@@ -122,65 +151,139 @@ Produce the **AI Exposure Heatmap** artifact.
 | Problem framing | 🟦 | 🟦 | 🟩 | 🟨 | 🟨 |
 | Stakeholder comms | 🟦 | 🟦 | 🟦 | 🟩 | 🟩 |
 
----
-
-### Phase 6 — Results & Recommendations
-Deliver a structured summary for decision-making.
-
-**Agent delivers:**
-
-#### 📋 Executive Summary
-- Role analyzed
-- Total capabilities mapped
-- Recommended autonomy level (with rationale)
-
-#### 🔑 Key Insights
-- Which capabilities automate first (quick wins for AI investment)
-- Which capabilities expand (upskilling priorities)
-- Where human judgment is irreplaceable
-
-#### 🗺️ Redesign Recommendations
-- Suggested workflow changes per autonomy level
-- Agent design opportunities (which tasks to automate with Copilot agents)
-- Human-AI interaction model (in-the-loop vs. on-the-loop per capability)
-
-#### 📁 Exportable Artifacts
-- Capability decomposition table
-- AI Exposure Heatmap
-- Workshop facilitation guide (Q&A summary)
+**Key insights generated:**
+- 🚀 **Top 3 quick wins** — Capabilities that automate fastest
+- 📚 **Upskilling priorities** — Capabilities that expand (higher-value work)
+- 🧠 **Human essentials** — Irreplaceable judgment tasks
 
 ---
 
-## Agent Behaviors & Rules
+### Phase 6️⃣ — Results & Recommendations
+**What happens:** Agent delivers structured summary for strategic decision-making.
 
-- **Always validate** capability decomposition with the user before mapping autonomy levels
-- **Never assume** the autonomy target — always ask explicitly
-- **Adapt language** to the user's role (technical vs. business audience)
-- **Flag high-risk capabilities** (ethical, regulatory) and recommend human oversight
-- **Offer to iterate** — users can refine inputs and regenerate outputs at any phase
-- **Be concise** in summaries; offer detail on request
+#### 📊 Executive Summary
+- Role analyzed & total capabilities mapped
+- Recommended autonomy level (with clear rationale)
+- Timeline to achieve target autonomy
+
+#### 🔑 Strategic Insights
+- **Quick wins:** Which capabilities automate first (invest here first)
+- **Expansion areas:** Which capabilities expand (upskilling/training)
+- **Human essentials:** Where judgment is irreplaceable (no automation)
+
+#### 🗺️ Implementation Roadmap
+- Workflow changes per autonomy level
+- Agent design opportunities (which tasks to automate)
+- Human-AI interaction model (in-the-loop vs. on-the-loop)
+
+#### 📁 Deliverables
+- ✅ Capability decomposition table (editable)
+- ✅ AI Exposure Heatmap (printable)
+- ✅ Workshop facilitation guide (Q&A summary)
+- ✅ Executive brief (1-page summary)
 
 ---
 
-## Error Handling
+## 🧠 Agent Behaviors & Rules
 
-| Situation | Agent Response |
-|---|---|
-| Role is ambiguous | Ask for a job description or key responsibilities |
-| User skips clarifying questions | Proceed with reasonable defaults; flag assumptions made |
-| Capability list is too broad | Suggest grouping into max 10–12 capabilities |
-| User requests L5 for high-risk role | Flag governance concerns and recommend a phased approach |
+The agent follows these **non-negotiable principles** to ensure quality analysis:
+
+| Rule | Why It Matters | Impact |
+|------|----------------|--------|
+| ✅ **Always validate** capability decomposition with user | Prevents garbage-in-garbage-out | Analysis accuracy |
+| 🚫 **Never assume** autonomy target | Avoids imposing wrong level | Alignment with org strategy |
+| 🌍 **Adapt language** to audience (technical vs. business) | Ensures understanding | User satisfaction |
+| 🚨 **Flag high-risk** capabilities (ethical, regulatory) | Prevents compliance violations | Risk mitigation |
+| 🔄 **Offer to iterate** — users can refine and regenerate | Enables refinement | Better outcomes |
+| 📝 **Be concise** in summaries; offer detail on request | Respects user time | Higher adoption |
 
 ---
 
-## Sample Conversation Starter Prompts
+## ⚠️ Error Handling
+
+**How the agent responds to common challenges:**
+
+| Challenge | Agent Response |
+|-----------|---|
+| **Ambiguous role** | "Can you share a job description or list of key responsibilities?" |
+| **User skips questions** | "I'll proceed with reasonable defaults, but note these assumptions..." |
+| **Too many capabilities** | "Let's group these into max 10–12. Which ones are most critical?" |
+| **L5 request for risky role** | "⚠️ For regulatory/safety roles, I recommend a phased approach (L3 → L4 over time)." |
+| **Unable to answer question** | "No problem! Let's flag this and move forward; we can revisit later." |
+
+---
+
+## 💬 Sample Conversation Starters
+
+Copy & paste to start an analysis:
+
+**For role analysis:**
 - *"Map the AI autonomy for a Marketing Manager role."*
+- *"Analyze how AI impacts a Data Engineer."*
+- *"Which tasks in my Sales Director role are at risk of automation?"*
+
+**For workflow redesign:**
 - *"I want to redesign my team's workflow with AI — where do I start?"*
 - *"Generate an AI exposure heatmap for our Data Engineering team."*
-- *"Which tasks in my role are most at risk of automation?"*
+
+**For strategic planning:**
+- *"Which capabilities in Finance roles should we automate first?"*
+- *"What autonomy level should we target for Software Engineers?"*
 
 ---
 
-## License
+## 📚 Documentation
+
+| Document | Purpose | Audience |
+|----------|---------|----------|
+| [**SPEC.md**](./SPEC.md) | Complete requirements & tech stack | Product managers, engineers |
+| [**ARCHITECTURE.md**](./ARCHITECTURE.md) | Design patterns, diagrams, ADRs | Architects, senior engineers |
+| [**IMPROVEMENT_PLAN.md**](./IMPROVEMENT_PLAN.md) | 12-month roadmap & ROI analysis | Executives, leadership |
+
+---
+
+## 🛠️ Implementation Details
+
+### **Technical Stack**
+- **Languages:** TypeScript 5.4+ (strict mode)
+- **Web:** React 18.3 + Vite 5.3 + Tailwind CSS
+- **API:** Express.js 4.19 + Zod validation
+- **CLI:** Commander.js 12.1 + @inquirer/prompts
+- **Data:** File-based (v1) → PostgreSQL (Wave 1)
+- **Styling:** Zustand (state) + Tailwind (UI)
+
+### **Deployment**
+- **Web:** Vite production build → CDN
+- **API:** Node.js runtime → AWS Lambda / Container
+- **CLI:** Global npm package → `autonomy --help`
+- **Teams:** Declarative Agent → Teams SDK
+- **Claude:** MCP Server → Anthropic API
+
+---
+
+## 📄 License
 
 This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please:
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/your-feature`)
+3. Commit changes with clear messages
+4. Submit a pull request with description
+
+---
+
+## 📞 Support
+
+**For questions or feedback:**
+- Open an issue on GitHub
+- Check [SPEC.md](./SPEC.md) for technical details
+- Review [IMPROVEMENT_PLAN.md](./IMPROVEMENT_PLAN.md) for roadmap
+
+---
+
+**Last Updated:** June 4, 2026 | **Version:** 1.0.0-stable
