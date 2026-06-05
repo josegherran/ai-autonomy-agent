@@ -1,47 +1,78 @@
 #!/usr/bin/env node
-import { Command } from "commander";
 
-const program = new Command();
+import { Command } from 'commander'
+import chalk from 'chalk'
+import { analyzeCommand } from './commands/analyze.js'
+import { heatmapCommand } from './commands/heatmap.js'
+import { exportCommand } from './commands/export.js'
+import { listCommand } from './commands/list.js'
 
-program
-  .name("autonomy")
-  .description("AI Autonomy Mapper — AI Capability Decomposition Framework CLI")
-  .version("1.0.0");
-
-program
-  .command("analyze <role>")
-  .description("Run a full AI autonomy analysis for a job role")
-  .option("-c, --context <text>", "Optional organizational or industry context")
-  .action(async (role: string, options: { context?: string }) => {
-    // TODO: implement interactive analysis flow
-    console.log(`Analyzing role: ${role}`);
-    if (options.context) console.log(`Context: ${options.context}`);
-  });
+const program = new Command()
 
 program
-  .command("heatmap <sessionId>")
-  .description("Render the AI Exposure Heatmap for a saved session")
-  .action(async (sessionId: string) => {
-    // TODO: load session and render heatmap
-    console.log(`Heatmap for session: ${sessionId}`);
-  });
+  .name('autonomy')
+  .description(chalk.bold.cyan('AI Autonomy Mapper CLI') + ' — Map AI autonomy levels for any job role')
+  .version('1.0.0', '-v, --version')
 
 program
-  .command("export <sessionId>")
-  .description("Export all artifacts for a saved session")
-  .option("-f, --format <format>", "Output format: md, json, csv", "md")
-  .option("-o, --output <dir>", "Output directory", "./output")
-  .action(async (sessionId: string, options: { format: string; output: string }) => {
-    // TODO: export artifacts
-    console.log(`Exporting session ${sessionId} as ${options.format} to ${options.output}`);
-  });
-
-program
-  .command("list")
-  .description("List all saved analysis sessions")
+  .command('analyze [role]')
+  .alias('a')
+  .description('Run full interactive analysis workflow')
   .action(async () => {
-    // TODO: list sessions from local store
-    console.log("No saved sessions found.");
-  });
+    try {
+      await analyzeCommand()
+    } catch (err) {
+      if (err instanceof Error && err.message === 'User force closed the prompt') {
+        console.log(chalk.yellow('\n✓ Cancelled'))
+      } else {
+        console.error(chalk.red('Error:'), err)
+      }
+      process.exit(1)
+    }
+  })
 
-program.parse();
+program
+  .command('heatmap [sessionId]')
+  .alias('h')
+  .description('Display heatmap for a session')
+  .action(async (sessionId) => {
+    try {
+      await heatmapCommand(sessionId)
+    } catch (err) {
+      console.error(chalk.red('Error:'), err)
+      process.exit(1)
+    }
+  })
+
+program
+  .command('export [sessionId]')
+  .alias('e')
+  .description('Export session to markdown, JSON, or CSV')
+  .option('--format <type>', 'Export format: md, json, csv', 'md')
+  .action(async (sessionId, opts) => {
+    try {
+      await exportCommand(sessionId, opts.format)
+    } catch (err) {
+      console.error(chalk.red('Error:'), err)
+      process.exit(1)
+    }
+  })
+
+program
+  .command('list')
+  .alias('l')
+  .description('List all saved sessions')
+  .action(async () => {
+    try {
+      await listCommand()
+    } catch (err) {
+      console.error(chalk.red('Error:'), err)
+      process.exit(1)
+    }
+  })
+
+program.parse(process.argv)
+
+if (!process.argv.slice(2).length) {
+  program.outputHelp()
+}
