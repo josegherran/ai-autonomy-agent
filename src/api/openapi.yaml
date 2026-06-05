@@ -1,0 +1,149 @@
+openapi: "3.1.0"
+info:
+  title: AI Autonomy Mapper API
+  version: "1.0.0"
+  description: >
+    REST API for the AI Capability Decomposition Framework.
+    Guides organizations through role decomposition, autonomy-level mapping,
+    and heatmap generation for workforce redesign.
+
+servers:
+  - url: http://localhost:3000
+    description: Local development
+
+paths:
+  /sessions:
+    post:
+      summary: Create a new analysis session
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [role]
+              properties:
+                role:
+                  type: string
+                  example: "Data Scientist"
+                context:
+                  type: string
+                  example: "Financial services, 200-person team"
+      responses:
+        "201":
+          description: Session created
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+
+  /sessions/{id}:
+    get:
+      summary: Retrieve session state
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Session found
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Session"
+        "404":
+          description: Session not found
+
+  /sessions/{id}/capabilities:
+    post:
+      summary: Submit clarifying answers and generate capability map
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [answers]
+              properties:
+                answers:
+                  type: object
+                  additionalProperties: { type: string }
+      responses:
+        "200":
+          description: Capability map generated
+
+  /sessions/{id}/autonomy:
+    post:
+      summary: Generate autonomy level mapping
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                autonomy_target:
+                  type: string
+                  enum: [L1, L2, L3, L4, L5]
+      responses:
+        "200":
+          description: Autonomy mapping generated
+
+  /sessions/{id}/heatmap:
+    get:
+      summary: Retrieve the AI Exposure Heatmap artifact
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+        - name: format
+          in: query
+          schema:
+            type: string
+            enum: [markdown, json]
+            default: markdown
+      responses:
+        "200":
+          description: Heatmap artifact
+
+  /sessions/{id}/export:
+    get:
+      summary: Export all artifacts (decomposition table, heatmap, workshop guide)
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: All artifacts as markdown bundle
+
+components:
+  schemas:
+    Session:
+      type: object
+      properties:
+        id:
+          type: string
+        role:
+          type: string
+        context:
+          type: string
+        status:
+          type: string
+          enum: [created, capability_mapped, autonomy_mapped, complete]
+        createdAt:
+          type: string
+          format: date-time

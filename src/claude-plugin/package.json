@@ -1,0 +1,19 @@
+{
+  "name": "ai-autonomy-mapper",
+  "version": "1.0.0",
+  "description": "MCP plugin: AI Capability Decomposition Framework and autonomy-level heatmap generator",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/sdk": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.4.0",
+    "@types/node": "^20.0.0"
+  }
+}

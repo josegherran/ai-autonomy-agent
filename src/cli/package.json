@@ -1,0 +1,25 @@
+{
+  "name": "ai-autonomy-mapper-cli",
+  "version": "1.0.0",
+  "description": "CLI tool for the AI Capability Decomposition Framework",
+  "type": "module",
+  "bin": {
+    "autonomy": "dist/index.js"
+  },
+  "scripts": {
+    "dev": "tsx src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "commander": "^12.1.0",
+    "@inquirer/prompts": "^5.0.0",
+    "chalk": "^5.3.0",
+    "cli-table3": "^0.6.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.4.0",
+    "tsx": "^4.15.0"
+  }
+}
