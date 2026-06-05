@@ -1,19 +1,24 @@
 {
   "name": "ai-autonomy-mapper",
   "version": "1.0.0",
-  "description": "MCP plugin: AI Capability Decomposition Framework and autonomy-level heatmap generator",
+  "description": "AI Capability Decomposition Framework — MCP server for Claude, Cursor, and VS Code Copilot",
   "type": "module",
   "main": "dist/index.js",
   "scripts": {
     "build": "tsc",
     "dev": "tsc --watch",
-    "start": "node dist/index.js"
+    "start": "node dist/index.js",
+    "test": "node --experimental-vm-modules dist/tests/smoke.test.js",
+    "test:ts": "tsx src/tests/smoke.test.ts",
+    "lint": "tsc --noEmit"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.0.0"
   },
   "devDependencies": {
     "typescript": "^5.4.0",
-    "@types/node": "^20.0.0"
+    "@types/node": "^20.0.0",
+    "tsx": "^4.15.0"
   }
 }
+

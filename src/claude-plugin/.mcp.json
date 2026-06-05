@@ -1,0 +1,16 @@
+{
+  "name": "ai-autonomy-mapper",
+  "version": "1.0.0",
+  "description": "AI Capability Decomposition Framework — MCP server for Claude, Cursor, and VS Code Copilot",
+  "entrypoint": "dist/index.js",
+  "tools": [
+    "analyze_role",
+    "decompose_capabilities",
+    "map_autonomy_levels",
+    "generate_heatmap",
+    "export_artifacts"
+  ],
+  "prompts": [
+    "ai_autonomy_mapper_instructions"
+  ]
+}
