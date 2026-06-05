@@ -1,0 +1,35 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.26/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.26",
+  "version": "1.0.0",
+  "id": "${{TEAMS_APP_ID}}",
+  "developer": {
+    "name": "${{CONFIG__MANIFEST__DEVELOPER_NAME}}",
+    "websiteUrl": "${{CONFIG__MANIFEST__DEVELOPER_WEBSITE_URL}}",
+    "privacyUrl": "${{CONFIG__MANIFEST__DEVELOPER_PRIVACY_URL}}",
+    "termsOfUseUrl": "${{CONFIG__MANIFEST__DEVELOPER_TERMS_OF_USE_URL}}"
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "name": {
+    "short": "AI Autonomy Mapper",
+    "full": "AI Autonomy Mapper — AI Capability Decomposition Framework"
+  },
+  "description": {
+    "short": "Map AI autonomy levels for any job role.",
+    "full": "Guides teams through the AI Capability Decomposition Framework to assess AI impact on roles, design L1–L5 autonomy levels, and produce heatmap-ready workforce redesign artifacts."
+  },
+  "accentColor": "#0078D4",
+  "copilotAgents": {
+    "declarativeAgents": [
+      {
+        "id": "aiAutonomyMapper",
+        "file": "declarativeAgent.json"
+      }
+    ]
+  },
+  "permissions": ["identity", "messageTeamMembers"],
+  "validDomains": []
+}

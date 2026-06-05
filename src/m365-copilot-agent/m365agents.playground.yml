@@ -1,0 +1,28 @@
+# yaml-language-server: $schema=https://aka.ms/teams-toolkit/v1.11/yaml.schema.json
+# ATK lifecycle configuration — Agents Playground environment
+# Packages the declarative agent for testing in the Microsoft 365 Agents Playground.
+
+version: v1.11
+
+environmentFolderPath: ./env
+
+provision:
+  # Create a playground variant of the Teams app
+  - uses: teamsApp/create
+    with:
+      name: ${{TEAMS_APP_NAME}}-playground
+    writeToEnvironmentFile:
+      teamsAppId: TEAMS_APP_ID
+
+  # Package with playground env var values
+  - uses: teamsApp/zipAppPackage
+    with:
+      manifestPath: ./appPackage/manifest.json
+      outputZipPath: ./appPackage/build/appPackage.playground.zip
+      outputFolder: ./appPackage/build
+
+deploy:
+  # Declarative agent — no backend deploy step required.
+  - uses: script
+    with:
+      run: echo "Declarative agent — no backend deploy step required."

@@ -1,0 +1,56 @@
+# yaml-language-server: $schema=https://aka.ms/teams-toolkit/v1.11/yaml.schema.json
+# ATK lifecycle configuration — cloud/dev environment
+# Declarative Agent: no backend compute, no bot service required.
+# This file provisions the Teams app registration and publishes the agent to M365 Copilot.
+
+version: v1.11
+
+environmentFolderPath: ./env
+
+provision:
+  # 1. Create (or update) the Teams app registration in the tenant app catalog
+  - uses: teamsApp/create
+    with:
+      name: ${{TEAMS_APP_NAME}}
+    writeToEnvironmentFile:
+      teamsAppId: TEAMS_APP_ID
+
+  # 2. Package the appPackage (resolves ${{...}} placeholders, zips manifest + icons + declarativeAgent.json)
+  - uses: teamsApp/zipAppPackage
+    with:
+      manifestPath: ./appPackage/manifest.json
+      outputZipPath: ./appPackage/build/appPackage.${{APP_ENV}}.zip
+      outputFolder: ./appPackage/build
+
+  # 3. Validate the manifest against the Teams schema before upload
+  - uses: teamsApp/validateManifest
+    with:
+      manifestPath: ./appPackage/manifest.json
+
+  # 4. Upload the app package to the tenant app catalog
+  - uses: teamsApp/update
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{APP_ENV}}.zip
+
+  # 5. Extend the Teams app to Microsoft 365 (makes it available in M365 Copilot Chat)
+  - uses: teamsApp/extendToM365
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{APP_ENV}}.zip
+    writeToEnvironmentFile:
+      titleId: M365_TITLE_ID
+      appId: M365_APP_ID
+
+publish:
+  # Package with resolved env vars and submit to the Teams Admin Center for org-wide distribution
+  - uses: teamsApp/zipAppPackage
+    with:
+      manifestPath: ./appPackage/manifest.json
+      outputZipPath: ./appPackage/build/appPackage.${{APP_ENV}}.zip
+      outputFolder: ./appPackage/build
+
+  - uses: teamsApp/publishAppPackage
+    with:
+      appPackagePath: ./appPackage/build/appPackage.${{APP_ENV}}.zip
+    writeToEnvironmentFile:
+      publishedAppId: TEAMS_APP_PUBLISHED_APP_ID
+projectId: bc2a4454-073b-4035-85a3-e69b3234fd4f

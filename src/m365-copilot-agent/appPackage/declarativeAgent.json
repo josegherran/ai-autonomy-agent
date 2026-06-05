@@ -1,0 +1,25 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/copilot/declarative-agent/v1.7/schema.json",
+  "version": "v1.7",
+  "name": "AI Autonomy Mapper",
+  "description": "Guides teams through the AI Capability Decomposition Framework to assess AI impact on roles, design L1–L5 autonomy levels, and produce heatmap-ready workforce redesign artifacts.",
+  "instructions": "$[file('instruction.txt')]",
+  "conversation_starters": [
+    {
+      "title": "Analyze a role",
+      "text": "Map the AI autonomy for a Marketing Manager role."
+    },
+    {
+      "title": "Generate heatmap",
+      "text": "Generate an AI exposure heatmap for our Data Engineering team."
+    },
+    {
+      "title": "Redesign workflow",
+      "text": "I want to redesign my team's workflow with AI — where do I start?"
+    },
+    {
+      "title": "Automation risk",
+      "text": "Which tasks in my role are most at risk of automation?"
+    }
+  ]
+}
