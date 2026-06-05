@@ -180,3 +180,7 @@ Deliver a structured summary for decision-making.
 - *"Which tasks in my role are most at risk of automation?"*
 
 ---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
